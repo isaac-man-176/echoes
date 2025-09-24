@@ -7,7 +7,7 @@ export default function SearchEcho() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/search-ai", { query });
+      const response = await axios.post("https://echoes-ed6b.onrender.com/", { query });
       setResults(response.data.results);
     } catch (error) {
       console.error(error);

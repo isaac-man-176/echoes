@@ -9,7 +9,7 @@ export default function CreateEcho() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/echoes", { title, author, content });
+      await API.post("/api/echoes", { title, author, content });
       setTitle("");
       setAuthor("");
       setContent("");

@@ -7,7 +7,7 @@ export default function ViewEchoes() {
   useEffect(() => {
     const fetchEchoes = async () => {
       try {
-        const res = await API.get("/echoes");
+        const res = await API.get("/api/echoes");
         setEchoes(res.data);
       } catch (err) { console.error(err); }
     };

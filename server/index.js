@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:5173",  // allow your Vite frontend
+  origin: "https://echoes-g3fa835fp-isaacs-projects-211b44b8.vercel.app/",  // allow your Vite frontend
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));

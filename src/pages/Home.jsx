@@ -48,7 +48,7 @@ export default function Home() {
         <p>
           Echoes was born out of my own experience as a first-year university student,
           standing at the crossroads of my future. Over the past few years, I’ve had to
-          make countless decisions about my path in life—what to study, what to pursue,
+          make countless decisions about my path in life: what to study, what to pursue,
           and who I want to become. I noticed that most of the advice we get comes from
           guest speakers, TED talkers, or professionals who are already at the peak of
           their careers. While inspiring, their journeys don’t always feel relatable.

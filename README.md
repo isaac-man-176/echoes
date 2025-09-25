@@ -1,5 +1,8 @@
 # Echoes - Life Experience Sharing Platform
-https://echoes-by-isaac.vercel.app/
+See it here -> https://echoes-by-isaac.vercel.app/
+
+## 🎥 Video Demo
+[![Echoes Demo](https://img.youtube.com/vi/Uil5ar0L8RI/0.jpg)](https://www.youtube.com/watch?v=Uil5ar0L8RI)
 
 ## 🌟 What is Echoes?
 

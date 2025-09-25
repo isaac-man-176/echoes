@@ -95,6 +95,10 @@ export default function Home() {
           your experiences resonate with people just like you.
         </p>
       </section>
+      <footer className="page-footer">
+        © {new Date().getFullYear()} Echoes. Built by a freshman with a vision.
+      </footer>
     </div>
+    
   );
 }

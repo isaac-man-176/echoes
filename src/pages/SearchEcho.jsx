@@ -41,133 +41,95 @@ export default function SearchEcho() {
         console.log('Cleaned data:', cleanData);
         console.log('===================');
 
-        // Extract AI explanation (look for patterns like "similar echoes I heard")
+        // Split into AI explanation and echoes section
+        const echoesSectionStart = cleanData.toLowerCase().indexOf('here are some similar echoes i heard:');
+        
         let explanation = '';
-        if (cleanData.includes('similar echoes I heard') || cleanData.includes('initiating a conversation')) {
-          const explanationEnd = cleanData.indexOf('Ec') > -1 ? cleanData.indexOf('Ec') : 
-                               cleanData.indexOf('Echo') > -1 ? cleanData.indexOf('Echo') : -1;
-          
-          if (explanationEnd > 0) {
-            explanation = cleanData.substring(0, explanationEnd).trim();
+        let echoesText = '';
+        
+        if (echoesSectionStart > -1) {
+          explanation = cleanData.substring(0, echoesSectionStart).trim();
+          echoesText = cleanData.substring(echoesSectionStart + 'here are some similar echoes i heard:'.length).trim();
+        } else {
+          // Fallback: try to find where the actual echoes start
+          const titleMatch = cleanData.match(/Title:\s*.+/i);
+          if (titleMatch) {
+            const titleStart = cleanData.indexOf(titleMatch[0]);
+            explanation = cleanData.substring(0, titleStart).trim();
+            echoesText = cleanData.substring(titleStart).trim();
           } else {
-            // Find the first line that looks like an echo start
-            const lines = cleanData.split('\n');
-            for (let i = 0; i < lines.length; i++) {
-              if (lines[i].match(/^(Ec|Echo|Testing|Result)\s*\d*/i)) {
-                explanation = lines.slice(0, i).join(' ').trim();
-                break;
-              }
-            }
+            explanation = cleanData;
+            echoesText = '';
           }
         }
         
-        setAiText(explanation || "Here's what I found:");
+        setAiText(explanation);
 
-        // Parse the specific format: "Ec\nAuthor: Dev\nEcho 3 by dev: testing"
+        // Parse the echoes from the database format
         const echoes = [];
-        const lines = cleanData.split('\n').filter(line => line.trim());
         
-        console.log('=== ALL LINES ===');
-        lines.forEach((line, index) => {
-          console.log(`Line ${index}:`, line);
-        });
-        console.log('================');
-        
-        let currentEcho = null;
-        
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i].trim();
+        if (echoesText) {
+          // The echoes are in the format: "Title: [title] Author: [author] Content: [content]"
+          // Split by lines and process each echo block
+          const lines = echoesText.split('\n').filter(line => line.trim());
           
-          // Check if this line starts a new echo (Ec, Echo, Testing, etc.)
-          if (line.match(/^(Ec|Echo|Testing|Result)\s*\d*/i) && 
-              i + 1 < lines.length && lines[i + 1].trim().startsWith('Author:')) {
-            
-            // Save previous echo if exists
-            if (currentEcho) {
-              echoes.push(currentEcho);
-            }
-            
-            // Extract title from first line
-            const title = line.replace(/^Ec\s*/i, 'Echo ').trim();
-            
-            // Extract author from next line
-            const authorLine = lines[i + 1].trim();
-            const authorMatch = authorLine.match(/Author:\s*(.+)/i);
-            const author = authorMatch ? authorMatch[1].trim() : 'Dev';
-            
-            // Look for content in subsequent lines
-            let content = '';
-            if (i + 2 < lines.length) {
-              // Get the next line which should contain the actual echo content
-              const contentLine = lines[i + 2].trim();
-              
-              console.log('=== CONTENT LINE ANALYSIS ===');
-              console.log('Original content line:', contentLine);
-              
-              // Remove any "Echo X by dev:" prefix from the content
-              content = contentLine.replace(/Echo\s+\d+\s+by\s+[^:]+:\s*/i, '').trim();
-              
-              console.log('After removing Echo prefix:', content);
-              console.log('============================');
-              
-              // Skip the author line since we've used it
-              i += 1;
-            }
-            
-            currentEcho = {
-              title: title,
-              author: author,
-              content: content || 'Content not available'
-            };
-            
-            console.log('=== PARSED ECHO ===');
-            console.log('Title:', currentEcho.title);
-            console.log('Author:', currentEcho.author);
-            console.log('Content:', currentEcho.content);
-            console.log('==================');
-            
-            // Skip the content line since we've used it
-            i += 1;
-          }
-        }
-        
-        // Don't forget the last echo
-        if (currentEcho) {
-          echoes.push(currentEcho);
-        }
-
-        // If no echoes found with the expected format, try alternative parsing
-        if (echoes.length === 0) {
-          console.log('=== FALLBACK PARSING ===');
-          // Fallback: look for any lines that contain actual content
+          console.log('=== ECHO LINES ===');
           lines.forEach((line, index) => {
-            // Skip lines that are part of the AI explanation
-            if (!line.includes('similar echoes') && 
-                !line.includes('initiating a conversation') &&
-                line.trim() && 
-                line !== 'Hi') {
-              
-              console.log(`Fallback line ${index}:`, line);
-              
-              // Check if this line contains an echo pattern
-              const echoMatch = line.match(/(Echo\s+\d+)\s+by\s+([^:]+):\s*(.+)/i);
-              if (echoMatch) {
-                echoes.push({
-                  title: echoMatch[1].trim(),
-                  author: echoMatch[2].trim(),
-                  content: echoMatch[3].trim()
-                });
-              } else {
-                // Just use the line as content
-                echoes.push({
-                  title: `Result ${index + 1}`,
-                  author: 'Dev',
-                  content: line.trim()
-                });
+            console.log(`Line ${index}:`, line);
+          });
+          console.log('==================');
+          
+          let currentEcho = {};
+          
+          lines.forEach((line) => {
+            line = line.trim();
+            
+            // Check for Title line
+            if (line.startsWith('Title:')) {
+              // If we already have an echo, save it before starting a new one
+              if (currentEcho.title && currentEcho.content) {
+                echoes.push(currentEcho);
+                currentEcho = {};
               }
+              currentEcho.title = line.replace(/^Title:\s*/i, '').trim();
+            }
+            // Check for Author line
+            else if (line.startsWith('Author:')) {
+              currentEcho.author = line.replace(/^Author:\s*/i, '').trim();
+            }
+            // Check for Content line
+            else if (line.startsWith('Content:')) {
+              currentEcho.content = line.replace(/^Content:\s*/i, '').trim();
+            }
+            // If it's a continuation of content, add to current content
+            else if (currentEcho.content && line) {
+              currentEcho.content += ' ' + line;
             }
           });
-          console.log('======================');
+          
+          // Don't forget the last echo
+          if (currentEcho.title && currentEcho.content) {
+            echoes.push(currentEcho);
+          }
+          
+          // If the above method didn't work, try regex parsing
+          if (echoes.length === 0) {
+            console.log('=== TRYING REGEX PARSING ===');
+            // Use a more robust regex to capture the entire pattern
+            const echoRegex = /Title:\s*([^\n]+?)\s*Author:\s*([^\n]+?)\s*Content:\s*([\s\S]*?)(?=\s*Title:\s*|$)/gi;
+            let match;
+            
+            while ((match = echoRegex.exec(echoesText)) !== null) {
+              const title = match[1].trim();
+              const author = match[2].trim();
+              const content = match[3].trim();
+              
+              if (title && content) {
+                echoes.push({ title, author, content });
+                console.log('Parsed echo:', { title, author, content });
+              }
+            }
+          }
         }
 
         console.log('=== FINAL PARSED ECHOES ===');

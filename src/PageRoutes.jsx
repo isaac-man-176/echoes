@@ -42,10 +42,6 @@ export default function PageRoutes () {
         {page === 'view' && <ViewEcho />}
         {page === 'search' && <SearchEcho />}
       </main>
-
-      <footer className="page-footer">
-        © {new Date().getFullYear()} Echoes. Built with ❤️ by a freshman with a vision.
-      </footer>
     </>
   );
 }

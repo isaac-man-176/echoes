@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./home.css";
+import "./Home.css";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);

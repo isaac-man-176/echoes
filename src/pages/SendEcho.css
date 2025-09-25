@@ -1,0 +1,75 @@
+.send-echo-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #5BBE97 0%, #46B47F 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.send-echo-container h2 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.send-echo-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.send-echo-container input,
+.send-echo-container textarea {
+  width: 100%;
+  padding: 1.2rem 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-family: "Poppins", sans-serif;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.send-echo-container input::placeholder,
+.send-echo-container textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.send-echo-container button[type="submit"] {
+  background-color: #50AC69;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.send-echo-container button[type="submit"]:hover {
+  background-color: #46B47F;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .send-echo-container h2 {
+    font-size: 2.5rem;
+  }
+
+  .send-echo-container input,
+  .send-echo-container textarea,
+  .send-echo-container button[type="submit"] {
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+  }
+}

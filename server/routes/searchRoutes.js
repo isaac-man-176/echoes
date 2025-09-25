@@ -42,7 +42,7 @@ router.post('/search-ai', validateSearchInput, async (req, res) => {
   .limit(50)               // limit to avoid too long prompts
   .lean();
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-    const echoesText = allEchoes.map((e, i) => `Echo ${i + 1} by ${e.author}: ${e.content}`).join('\n');
+    const echoesText = allEchoes.map((e, i) => `Echo - Title: ${e.title} Author: ${e.author} Content: ${e.content}`).join('\n');
      const prompt = `User Query: "${query}"
 
 Available Echoes (recent user contributions):

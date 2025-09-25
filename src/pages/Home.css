@@ -1,0 +1,154 @@
+/* Reset and modern font */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Inter", sans-serif; /* modern font */
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0; /* remove margin for all elements */
+  padding: 0; /* remove padding for all elements */
+  box-sizing: border-box;
+}
+
+/* Home container */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Title section with animated radial gradient background */
+.title-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  /* Radial gradient from center */
+  background: radial-gradient(circle at center, 
+    #5BBE97, 
+    #58C188, 
+    #52AA75, 
+    #61C499, 
+    #46B47F
+  );
+  background-size: 400% 400%; /* smooth transition */
+  animation: gradientWave 12s ease infinite;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Ripple spans */
+.ripple {
+  position: absolute;
+  width: 450px;   /* tripled size */
+  height: 450px;  /* tripled size */
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 6s infinite ease-out;
+  z-index: 1; /* behind text */
+}
+
+/* Ripple keyframes */
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0.4;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Assign delays to each ripple automatically if needed */
+.ripple:nth-child(1) { animation-delay: 0s; }
+.ripple:nth-child(2) { animation-delay: 1.5s; }
+.ripple:nth-child(3) { animation-delay: 3s; }
+.ripple:nth-child(4) { animation-delay: 4.5s; }
+.ripple:nth-child(5) { animation-delay: 6s; }
+
+
+/* Gradient animation keyframes */
+@keyframes gradientWave {
+  0% {
+    background-position: center center;
+  }
+  50% {
+    background-position: center center;
+  }
+  100% {
+    background-position: center center;
+  }
+}
+
+/* Title text styling with fade-in */
+.title-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-text {
+  font-size: 3rem;
+  font-weight: 400;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.echoes-text {
+  font-size: 10rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Content section */
+.content-section {
+  background: white;
+  padding: 4rem 20%;
+  text-align: left;
+}
+
+.content-section h2,
+.content-section h3 {
+  margin-top: 2rem;
+  font-weight: bold;
+}
+
+.content-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+/* Scroll down prompt */
+.scroll-down {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-weight: 400; /* non-bold */
+  font-size: 1.2rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* clicks pass through */
+}
+.scroll-down.hidden {
+  opacity: 0;
+}

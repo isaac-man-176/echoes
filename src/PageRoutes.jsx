@@ -1,30 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HomePage from './pages/Home.jsx';
-import CreateEcho from './pages/CreateEcho.jsx';
+import SendEcho from './pages/SendEcho.jsx';
 import ViewEcho from './pages/ViewEcho.jsx';
 import SearchEcho from './pages/SearchEcho.jsx';
+import './PageRoutes.css';
 
 export default function PageRoutes () {
   const [page, setPage] = useState('home');
+  const [scrolledHeader, setScrolledHeader] = useState(false);
 
-  const  handleNavClick = (e, targetPage) => {
+  const handleNavClick = (e, targetPage) => {
     e.preventDefault();
     setPage(targetPage);
+    window.scrollTo(0, 0); 
   }
+
+  // Change header style on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight - 50) setScrolledHeader(true);
+      else setScrolledHeader(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      <header className = "navBar">
+      <header className={`navBar ${scrolledHeader ? 'scrolled' : ''}`}>
         <nav>
-          <a href = "/" onClick = {(e) => handleNavClick(e, 'home')}>Home</a>
-          <a href = "/create" onClick = {(e) => handleNavClick(e, 'create')}>Create Echoe</a>
-          <a href = "/view" onClick = {(e) => handleNavClick(e, 'view')}>View Echoe</a>
-          <a href = "/search" onClick = {(e) => handleNavClick(e, 'search')}>Search Echoe</a>
+          <a href="/" onClick={(e) => handleNavClick(e, 'home')} className={page === 'home' ? 'active' : ''}>Home</a>
+          <a href="/send" onClick={(e) => handleNavClick(e, 'send')} className={page === 'send' ? 'active' : ''}>Send Echo</a>
+          <a href="/view" onClick={(e) => handleNavClick(e, 'view')} className={page === 'view' ? 'active' : ''}>View Echoes</a>
+          <a href="/search" onClick={(e) => handleNavClick(e, 'search')} className={page === 'search' ? 'active' : ''}>Search for Echoes</a>
         </nav>
-        {page === 'home' && <HomePage />}
-        {page === 'create' && <CreateEcho/>}
-        {page === 'view' && <ViewEcho/>}
-        {page === 'search' && <SearchEcho/>}
       </header>
+
+      <main style={{ marginTop: 0 }}>
+        {page === 'home' && <HomePage />}
+        {page === 'send' && <SendEcho />}
+        {page === 'view' && <ViewEcho />}
+        {page === 'search' && <SearchEcho />}
+      </main>
+
+      <footer className="page-footer">
+        © {new Date().getFullYear()} Echoes. Built with ❤️ by a freshman with a vision.
+      </footer>
     </>
-  )
+  );
 }

@@ -1,0 +1,89 @@
+/* Reset and font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Inter", sans-serif;
+}
+
+/* Container for the ViewEcho page */
+.view-echo-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #5BBE97 0%, #46B47F 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  color: white;
+  text-align: center;
+}
+
+/* Page heading */
+.view-echo-container h2 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* Grid container for echo cards */
+.view-echo-container .echo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Individual echo card */
+.view-echo-container .echo-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  text-align: left;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.view-echo-container .echo-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Echo title */
+.view-echo-container .echo-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Author line */
+.view-echo-container .echo-card p strong {
+  font-weight: 600;
+}
+
+/* Content paragraph */
+.view-echo-container .echo-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+/* No echoes message */
+.view-echo-container .no-echoes {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .view-echo-container h2 {
+    font-size: 2.5rem;
+  }
+
+  .view-echo-container .echo-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .view-echo-container .echo-card p {
+    font-size: 1rem;
+  }
+}

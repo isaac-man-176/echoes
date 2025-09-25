@@ -1,16 +1,48 @@
-# React + Vite
+# Echoes - Life Experience Sharing Platform
+https://echoes-by-isaac.vercel.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🌟 What is Echoes?
 
-Currently, two official plugins are available:
+Echoes is a platform where people share authentic life experiences, not just success stories. It's designed for students and young professionals navigating important life decisions, providing real insights from those who've walked similar paths.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**The Problem:** Most advice comes from highly accomplished professionals whose journeys feel distant and unrelatable. Echoes brings you stories from people currently in the trenches.
 
-## React Compiler
+**The Solution:** A space where everyone can share their "echo" - the messy, uncertain, in-progress stories that most of us are actually living.
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+- **🔍 AI-Powered Search**: Intelligent search that understands context and finds relevant experiences using natural language queries
+- **📱 Modern Interface**: Beautiful gradient animations, smooth transitions, and fully responsive design
+- **🎯 Core Functionalities**: Share experiences, browse recent submissions, and find specific stories using AI-powered search
+- **🤖 AI Integration**: Uses Google's Gemini AI for semantic search, context understanding, and intelligent matching between user queries and existing echoes
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Technology Stack
+
+### Frontend
+- **React** - UI framework
+- **CSS3** - Styling with modern features
+- **Axios** - HTTP requests
+
+### Backend
+- **Node.js** - Runtime environment
+- **MongoDB** - Database
+- **Google Gemini API** - AI capabilities
+
+## 🚀 Deployment
+
+### Backend (Render)
+- Connected GitHub repository with automatic deployment on push
+- Environment variables set for MongoDB and Gemini API
+
+### Frontend (Vercel)
+- Continuous deployment from GitHub repository
+- Build command: `npm run build`
+- Environment variables configured for API connectivity
+
+## 🙏 Acknowledgments
+
+Built with ❤️ by a university student who understands the struggle of navigating educational and career choices.
+
+---
+
+**Echoes** - Because every journey deserves to be heard.
